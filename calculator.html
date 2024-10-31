@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Онлайн-калькулятор</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .calculator {
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .calculator input, .calculator button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 18px;
+        }
+        .calculator button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .calculator button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <h2>Онлайн-калькулятор</h2>
+    <input type="text" id="expression" placeholder="Введіть вираз">
+    <button onclick="calculate()">Обчислити</button>
+    <p id="result"></p>
+    <div>
+        <button onclick="addToExpression('Math.sqrt(')">√</button>
+        <button onclick="addToExpression('Math.log(')">ln</button>
+        <button onclick="addToExpression('Math.sin(')">sin</button>
+        <button onclick="addToExpression('Math.cos(')">cos</button>
+        <button onclick="addToExpression('+')">+</button>
+        <button onclick="addToExpression('-')">-</button>
+        <button onclick="addToExpression('*')">×</button>
+        <button onclick="addToExpression('/')">÷</button>
+    </div>
+</div>
+
+<script>
+    function addToExpression(value) {
+        document.getElementById("expression").value += value;
+    }
+
+    function calculate() {
+        const expression = document.getElementById("expression").value;
+        try {
+            // Перевірка виразу на небажані символи
+            if (/[^-+*/().0-9a-zA-Z\s]/.test(expression)) {
+                throw new Error("Неприпустимі символи у виразі");
+            }
+
+            // Виконуємо обчислення з використанням eval()
+            const result = eval(expression);
+            document.getElementById("result").innerText = "Результат: " + result;
+        } catch (error) {
+            document.getElementById("result").innerText = "Помилка: " + error.message;
+        }
+    }
+</script>
+
+</body>
+</html>
